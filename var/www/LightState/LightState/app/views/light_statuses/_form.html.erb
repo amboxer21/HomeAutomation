@@ -1,0 +1,21 @@
+<%= form_for(@light_status) do |f| %>
+  <% if @light_status.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@light_status.errors.count, "error") %> prohibited this light_status from being saved:</h2>
+
+      <ul>
+      <% @light_status.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :state %><br>
+    <%= f.check_box :state %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
