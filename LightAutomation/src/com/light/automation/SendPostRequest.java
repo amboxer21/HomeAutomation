@@ -61,6 +61,7 @@ public class SendPostRequest {
       e.printStackTrace();
       Log.d("light_state","" + e.toString());
       Toast.makeText(context, "Cannot connect to server!", Toast.LENGTH_LONG).show();
+      return null;
     }
     catch (IOException e) {
       e.printStackTrace();
