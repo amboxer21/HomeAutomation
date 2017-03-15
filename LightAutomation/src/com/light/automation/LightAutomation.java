@@ -47,6 +47,11 @@ public class LightAutomation extends Activity {
   private static SendPostRequest sendPostRequest;
 
   @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+  }
+
+  @Override
   public void onResume() {
     super.onResume();
     if(db.getLightStateHelper().equals("1")) {
@@ -103,7 +108,8 @@ public class LightAutomation extends Activity {
             /*client = new Client("192.168.1.177", 9486, "onn"); 
             client.sendDataWithString();*/
             //Toast.makeText(getApplicationContext(), "" + db.getLightStateHelper(), Toast.LENGTH_LONG).show();
-            sendPostRequest.post(true, getIPAddress());
+            toggle.setChecked(true);
+            sendPostRequest.post(true, getIPAddress(), getApplicationContext());
             mIP = Message.obtain(null, Server.MSG_STRING, getIPAddress());
             mService.send(mIP);
             //db.updateLightState(new LightState(1, 1));
@@ -114,7 +120,8 @@ public class LightAutomation extends Activity {
             /*client = new Client("192.168.1.177", 9486, "off"); 
             client.sendDataWithString();*/
             //Toast.makeText(getApplicationContext(), "" + db.getLightStateHelper(), Toast.LENGTH_LONG).show();
-            sendPostRequest.post(false, getIPAddress());
+            toggle.setChecked(false);
+            sendPostRequest.post(false, getIPAddress(), getApplicationContext());
             mIP = Message.obtain(null, Server.MSG_STRING, getIPAddress());
             mService.send(mIP);
             //db.updateLightState(new LightState(1, 0));
@@ -152,7 +159,7 @@ public class LightAutomation extends Activity {
     return ip;
   }
 
-  public static void updateButton(String state) {
+  public void updateButton(String state) {
 
     toggle = (ToggleButton)findViewById(R.id.toggle);
 
@@ -164,7 +171,7 @@ public class LightAutomation extends Activity {
     }
   }
 
-  private static class LightReceiver extends BroadcastReceiver {
+  private class LightReceiver extends BroadcastReceiver {
  
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -181,5 +188,5 @@ public class LightAutomation extends Activity {
       }
     }
   }
-
+  
 }

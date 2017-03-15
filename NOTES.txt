@@ -1,0 +1,14 @@
+This is a compilation of notes. Mostly for the voice control portion of this project.
+
+Setting pocket sphinx up:
+Installing pocketsphinx via package manager is a great start point. For debian we can install libpocketsphinx-dev libsphinxbase-dev and python-pocketsphinx 
+
+We also need python python-dev python-pip build-essential swig git libpulse-dev
+
+We need the following to use the live speech method:
+git clone --recursive https://github.com/bambocher/pocketsphinx-python
+cd pocketsphinx-python
+python setup.py install
+
+Here is a good reference:
+https://pypi.python.org/pypi/pocketsphinx
