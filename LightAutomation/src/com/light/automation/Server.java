@@ -91,45 +91,44 @@ public class Server extends Service {
 
         try {
           serverSocket = new ServerSocket(8080);
-					db = new DatabaseHandler(getApplicationContext());		
+          db = new DatabaseHandler(getApplicationContext());		
           while(true) {
             Socket client = serverSocket.accept();
             try{
               BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
               serverMessage = in.readLine();
               if(serverMessage.equals("onn")) {
-						    Log.i("serverService","onn");
+                Log.i("serverService","onn");
                 db.updateLightState(new LightState(1, 1, mIP));
                 sendSig("onn");
               }
               else if(serverMessage.equals("off")) {
-						    Log.i("serverService","off");
+                Log.i("serverService","off");
                 db.updateLightState(new LightState(1, 0, mIP));
                 sendSig("off");
               }
-						  Log.i("serverService","" + serverMessage);
+              Log.i("serverService","" + serverMessage);
             } 
-					  catch(UnknownHostException e) {
-						  Log.e("serverService error","" + e.toString());
+            catch(UnknownHostException e) {
+              Log.e("serverService error","" + e.toString());
             } 
-					  catch(IOException e) {
-						  Log.e("serverService error","" + e.toString());
+            catch(IOException e) {
+              Log.e("serverService error","" + e.toString());
             } 
-					  finally {
+            finally {
               db.close();
-              //client.close();
             }
           }
         } 
-				catch (IOException e) {
-					Log.e("serverService error","" + e.toString());
+        catch (IOException e) {
+          Log.e("serverService error","" + e.toString());
           e.printStackTrace();
         }
-
       }
     });
-		TCPListenerThread.start();
-	}
+  
+    TCPListenerThread.start();
+  }
 
   public void sendSig(String sig) {
     Log.d("serverService", "sig: " + sig);
