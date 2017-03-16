@@ -86,6 +86,7 @@ public class Server extends Service {
       @Override
       public void run() {
 
+        BufferedReader in;
         Boolean run = true;
         String serverMessage = null;
 
@@ -95,7 +96,7 @@ public class Server extends Service {
           while(true) {
             Socket client = serverSocket.accept();
             try{
-              BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+              in = new BufferedReader(new InputStreamReader(client.getInputStream()));
               serverMessage = in.readLine();
               if(serverMessage.equals("onn")) {
                 Log.i("serverService","onn");
