@@ -1,0 +1,11 @@
+#! /bin/bash
+### BEGIN INIT INFO
+# Provides: rails
+# Required-Start:    $local_fs $syslog $remote_fs dbus
+# Required-Stop:     $local_fs $syslog $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start rails server on boot
+### END INIT INFO
+
+/usr/local/bin/rails s -b 0.0.0.0 -p 3000 &
