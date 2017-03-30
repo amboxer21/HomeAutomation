@@ -92,6 +92,7 @@ public class Server extends Service {
 
         try {
           serverSocket = new ServerSocket(8080);
+          serverSocket.setReuseAddress(true);
           db = new DatabaseHandler(getApplicationContext());		
           while(true) {
             Socket client = serverSocket.accept();
@@ -118,6 +119,7 @@ public class Server extends Service {
             } 
             finally {
               db.close();
+              client.close();
             }
           }
         } 
