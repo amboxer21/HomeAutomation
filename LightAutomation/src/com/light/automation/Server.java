@@ -103,11 +103,13 @@ public class Server extends Service {
                 Log.i("serverService","onn");
                 db.updateLightState(new LightState(1, 1, mIP));
                 sendSig("onn");
+                client.close();
               }
               else if(serverMessage.equals("off")) {
                 Log.i("serverService","off");
                 db.updateLightState(new LightState(1, 0, mIP));
                 sendSig("off");
+                client.close();
               }
               Log.i("serverService","" + serverMessage);
             } 
