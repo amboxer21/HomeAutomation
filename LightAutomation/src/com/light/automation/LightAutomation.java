@@ -94,7 +94,7 @@ public class LightAutomation extends Activity {
       mService.send(mIP);
     }
     catch(Exception e) {
-      Log.e("light_state", "" + e.toString());
+      Log.e("light_state", "Exception(1) => " + e.toString());
       e.printStackTrace();
     }
 
@@ -129,7 +129,7 @@ public class LightAutomation extends Activity {
           }
         }
 		    catch(Exception e) {
-          Log.e("light_state", e.toString());
+          Log.e("light_state", "Exception(2) => " + e.toString());
 			    e.printStackTrace();
 		    }
       }

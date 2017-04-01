@@ -13,6 +13,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.SocketException;
 import java.net.NetworkInterface;
+import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
 import android.app.Service;
@@ -34,6 +35,7 @@ import java.io.ByteArrayOutputStream;
 public class Server extends Service {
 
   String response = "";
+  public  static Socket client;
 	public  static String mIP = "";
   public  static DatabaseHandler db;
 	public  static final int MSG_STRING = 0;
@@ -92,11 +94,13 @@ public class Server extends Service {
 
         try {
           serverSocket = new ServerSocket(8080);
+          //serverSocket = new ServerSocket();
           serverSocket.setReuseAddress(true);
+          //serverSocket.bind(new InetSocketAddress(8080));
           db = new DatabaseHandler(getApplicationContext());		
           while(true) {
-            Socket client = serverSocket.accept();
             try{
+              client = serverSocket.accept();
               in = new BufferedReader(new InputStreamReader(client.getInputStream()));
               serverMessage = in.readLine();
               if(serverMessage.equals("onn")) {
@@ -111,13 +115,13 @@ public class Server extends Service {
                 sendSig("off");
                 client.close();
               }
-              Log.i("serverService","" + serverMessage);
+              Log.i("serverService","serverMessage => " + serverMessage);
             } 
             catch(UnknownHostException e) {
-              Log.e("serverService error","" + e.toString());
+              Log.e("serverService error","UnknownHostException => " + e.toString());
             } 
             catch(IOException e) {
-              Log.e("serverService error","" + e.toString());
+              Log.e("serverService error","IOException(1) => " + e.toString());
             } 
             finally {
               db.close();
@@ -125,8 +129,8 @@ public class Server extends Service {
             }
           }
         } 
-        catch (IOException e) {
-          Log.e("serverService error","" + e.toString());
+        catch(IOException e) {
+          Log.e("serverService error","IOException(2) => " + e.toString());
           e.printStackTrace();
         }
       }

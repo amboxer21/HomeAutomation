@@ -36,7 +36,7 @@ public class SendPostRequest {
     }
     catch(Exception e) {
       e.printStackTrace();
-      Log.d("light_state","" + e.toString());
+      Log.d("light_state","Exception(1) => " + e.toString());
     }
   }
 
@@ -51,21 +51,21 @@ public class SendPostRequest {
     }
     catch (UnsupportedEncodingException e) {
       e.printStackTrace();
-      Log.d("light_state","" + e.toString());
+      Log.d("light_state","UnsupportedEncodingException => " + e.toString());
     }
     catch (ClientProtocolException e) {
       e.printStackTrace();
-      Log.d("light_state","" + e.toString());
+      Log.d("light_state","ClientProtocolException => " + e.toString());
     }
     catch(org.apache.http.conn.HttpHostConnectException e) {
       e.printStackTrace();
-      Log.d("light_state","" + e.toString());
+      Log.d("light_state","org.apache.http.conn.HttpHostConnectException => " + e.toString());
       Toast.makeText(context, "Cannot connect to server!", Toast.LENGTH_LONG).show();
       return null;
     }
     catch (IOException e) {
       e.printStackTrace();
-      Log.d("light_state","" + e.toString());
+      Log.d("light_state","IOException(1) => " + e.toString());
     }
 
   return null;
