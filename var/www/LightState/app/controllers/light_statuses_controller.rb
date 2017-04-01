@@ -10,9 +10,6 @@ class LightStatusesController < ActionController::Base
     @light_status = LightStatus.all
   end
 
-  def edit
-  end
-
   def create
 
     @ip    = params[:ip]
@@ -37,13 +34,13 @@ class LightStatusesController < ActionController::Base
       Rails.logger.debug "debugging - state = 1"
       `bin/client 192.168.1.177 9486 "onn"`
       LightStatus.all.each do |ls|
-        `bin/client #{ls.ip} 8080 "onn"`
+        `bin/client #{ls.ip} 8080 "onn"` if is_alive?(ls.ip)
       end
     else
       Rails.logger.debug "debugging - state = 0"
       `bin/client 192.168.1.177 9486 "off"`
       LightStatus.all.each do |ls|
-        `bin/client #{ls.ip} 8080 "off"`
+        `bin/client #{ls.ip} 8080 "off"` if is_alive?(ls.ip)
       end
     end
 
@@ -56,10 +53,8 @@ class LightStatusesController < ActionController::Base
     end
   end
 
-  def update
-  end
-
-  def destroy
+  def is_alive?(ip)
+    return `ping -w1 -c1 #{ip}`.match(/, 0% packet loss/) ? true : false
   end
 
   private
