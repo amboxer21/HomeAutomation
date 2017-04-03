@@ -1,0 +1,86 @@
+class LightStatusesController < ActionController::Base
+
+  skip_before_action :very_authenticity_token
+
+  def index
+    @light_status = LightStatus.new
+  end
+
+  def new
+    @light_status = LightStatus.all
+  end
+
+  def create
+
+    @ip    = params[:ip]
+    @state = params[:state]
+
+    if !LightStatus.find_by(ip: @ip).nil? 
+      @light_status = LightStatus.find_by(ip: @ip)
+      LightStatus.all.each do |s| 
+        s.update_columns(state: @state)
+      end
+    else
+      LightStatus.create(state: @state, ip: @ip)
+      @light_status = LightStatus.find_by(ip: @ip)
+    end
+
+    if @state == "1"
+      Rails.logger.debug "debugging - state = 1"
+      LightStatus.all.each do |ls|
+        is_alive?(ls.ip) ? send_signal("onn") : signal_queue(ls.ip, "onn")
+      end
+    else
+      Rails.logger.debug "debugging - state = 0"
+      LightStatus.all.each do |ls|
+        is_alive?(ls.ip) ? send_signal("off") : signal_queue(ls.ip, "off")
+      end
+    end
+
+    respond_to do |format|
+      if @light_status.save
+        format.json { render nothing: true, status: :created }
+      else
+        format.json { render json: @light_status.errors, status: :unprocessable_entity }
+      end
+    end
+
+  end
+
+  def is_alive?(ip)
+    return `ping -w1 -c1 #{ip}`.match(/, 0% packet loss/) ? true : false
+  end
+
+  def send_signal(sig, ip = nil)
+    ip.nil? ? @ip = ls.ip : @ip = ip
+    `bin/client #{@ip} 9486 "#{sig}"`
+  end
+
+  def signal_queue(ip, sig)
+
+    counter = 0
+    IpQueue.find_or_create_by(ip_addr: ip, ip_signal: sig)
+
+    while true do
+      if counter == 300
+        IpQueue.all.each do |ips|
+          return if ips.nil?
+          if is_alive?(ips)
+            send_signal("onn", ips)
+            IpQueue.find_by(ip_addr: ip).destroy 
+          end
+          counter = 0
+        end
+      else
+        counter += 1
+        sleep 1
+      end
+    end
+  end
+
+  private
+  def lights_status_params
+    params.require(:light_status).permit(:id, :state)
+  end
+
+end
