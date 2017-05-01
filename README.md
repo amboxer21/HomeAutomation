@@ -1,7 +1,7 @@
 # HomeAutomation
-> Arduino project to turn lights on/off from android phone 
+> A project to turn your lights on/off from your android phone with voice control abilities 
 
-> Find video demonstration and breif explaination here https://www.youtube.com/watch?v=CjtIyYdGmWc
+> Find video demonstration here https://www.youtube.com/watch?v=AuKCVxZyc6w
 
 <dl>
   <dt>Environment variables to set:</dt>
