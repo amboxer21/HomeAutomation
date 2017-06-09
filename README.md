@@ -18,10 +18,10 @@
 **Note:** You can unset the exported variable by running unset CC(or name of exported here). Also, you may need to source ~/.bashrc if the variables are not sticking. Once you export variables in your bashrc, they will only take effect when you open a "new" terminal window unless you source them.
 
 **To compile from commandline**
-`Cross compile with pie flag => $CC client.c -fPIE -pie -o client`
+`[anthony@anthony HomeAutomation]$ $CC client.c -fPIE -pie -o client`
 
 **Building the standalone toolchain:**
-    <dd>$NDK/build/tools/make_standalone_toolchain.py --arch arm --api 21 --install-dir /home/anthony/android-toolchain
+    $NDK/build/tools/make_standalone_toolchain.py --arch arm --api 21 --install-dir /home/anthony/android-toolchain
   
 ## [Dependencies]
 
