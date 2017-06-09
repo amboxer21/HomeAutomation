@@ -5,7 +5,7 @@
 
 ## [Cross compile C client on ARMv7]
 
-**Environment Variables**(These are set in ~/.bashrc)
+**Environment Variables**(These are set in ~/.bashrc)**:**
 <dl>
   <dt> </dt>
     <dd>export NDK="/home/anthony/android-ndk-r13b"</dd>
