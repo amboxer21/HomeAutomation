@@ -16,7 +16,7 @@
 `export CC="/home/anthony/android-ndk-r13b/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-gcc-4.9 --sysroot=$SYSROOT"`
 
 
-**Note:** You can unset the exported variable by running unset CC(or name of exported here)
+**Note:** You can unset the exported variable by running unset CC(or name of exported here). Also, you may need to source ~/.bashrc if the variables are not sticking. Once you export variables in your bashrc, they will only take effect when you open a "new" terminal window unless you source them.
 
   
   <dt>Programs needed on top of the NDK and SDK:</dt>
