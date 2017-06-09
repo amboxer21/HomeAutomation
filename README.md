@@ -5,61 +5,61 @@
 
 ## [Directory Structure]
 
-**Arduino/**
+> **Arduino/**
 
 `This is the directory where all of the code for the micro conroller goes. I have an ethernet and wifi server which will work on either the wireless breakout board or the Arduino`
 
 ---
 
-**C/**
+> **C/**
 
 `In this directory there is a client and server model that can be used for testing. Whether it be cross compiled and used on your android or compiled natively on Linux.`
 
 ---
 
-**LightAutomation/**
+> **LightAutomation/**
 
 `This is an Android app that uses the old ant build system which is used to interface with the electromagnetic wireless switch and Raspberry PI 3. The app consists of a toggle button which is the only physical aspect of the app's UI.`
 
 ---
 
-**VoiceControl/**	
+> **VoiceControl/**	
 
 `FILL`
 
 ---
 
-**etc/init.d/**
+> **etc/init.d/**
 
 `FILL`
 
 ---
 
-**var/www/LightState/**
+> **var/www/LightState/**
 
 `FILL`
 
 ---
 
-**NOTES.txt**
+> **NOTES.txt**
 
 `FILL`
 
 ---
 
-**README.md**
+> **README.md**
 
 `FILL`
 
 ---
 
-**crontab.txt**
+> **crontab.txt**
 
 `FILL`
 
 ---
 
-**light_statuses_production.mysql**
+> **light_statuses_production.mysql**
 
 `FILL`
 
