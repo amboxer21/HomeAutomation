@@ -25,36 +25,36 @@
 
 **VoiceControl/**	
 
-`.`
+`FILL`
 ---
 
 **etc/init.d/**
-
+`FILL`
 
 ---
 
 **var/www/LightState/**
-
+`FILL`
 
 ---
 
 **NOTES.txt**
-
+`FILL`
 
 ---
 
 **README.md**
-
+`FILL`
 
 ---
 
 **crontab.txt**
-
+`FILL`
 
 ---
 
 **light_statuses_production.mysql**
-
+`FILL`
 
 ---
 <br></br>
