@@ -3,12 +3,17 @@
 
 > Find video demonstration here https://www.youtube.com/watch?v=AuKCVxZyc6w
 
+## [Cross compile C client on ARMv7]
+
+**Environment Variables**
 <dl>
-  <dt>Environment variables to set:</dt>
+  <dt>  Placed in ~/.bashrc:</dt>
     <dd>export NDK="/home/anthony/android-ndk-r13b"</dd>
     <dd>export TOOLCHAIN="/home/anthony/android-toolchain"</dd>
     <dd>export SYSROOT="/home/anthony/android-ndk-r13b/platforms/android-21/arch-arm"</dd>
     <dd>export CC="/home/anthony/android-ndk-r13b/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-gcc-4.9 --sysroot=$SYSROOT"</dd>
+    
+    Note: You can unset the exported variable by running unset CC(or name of exported here)
 
   
   <dt>Programs needed on top of the NDK and SDK:</dt>
