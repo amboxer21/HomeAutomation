@@ -7,7 +7,7 @@
 
 **Environment Variables**
 <dl>
-  <dt>  Placed in ~/.bashrc:</dt>
+  <dt> </dt>
     <dd>export NDK="/home/anthony/android-ndk-r13b"</dd>
     <dd>export TOOLCHAIN="/home/anthony/android-toolchain"</dd>
     <dd>export SYSROOT="/home/anthony/android-ndk-r13b/platforms/android-21/arch-arm"</dd>
