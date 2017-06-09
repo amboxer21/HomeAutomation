@@ -42,7 +42,7 @@
 <br></br>
 **light_statuses_production.mysql**
 
-
+<br></br>
 ## [Cross compile C client on ARMv7]
 
 **Environment Variables**(These are set in ~/.bashrc)**:**
