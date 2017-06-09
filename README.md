@@ -7,15 +7,16 @@
 
 **Environment Variables**(These are set in ~/.bashrc)**:**
 
-- `export NDK="/home/anthony/android-ndk-r13b"`
+`export NDK="/home/anthony/android-ndk-r13b"`
 
-- `export TOOLCHAIN="/home/anthony/android-toolchain"`
+`export TOOLCHAIN="/home/anthony/android-toolchain"`
 
-- `export SYSROOT="/home/anthony/android-ndk-r13b/platforms/android-21/arch-arm"`
+`export SYSROOT="/home/anthony/android-ndk-r13b/platforms/android-21/arch-arm"`
 
-- `export CC="/home/anthony/android-ndk-r13b/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-gcc-4.9 --sysroot=$SYSROOT"`
-    
-    Note: You can unset the exported variable by running unset CC(or name of exported here)
+`export CC="/home/anthony/android-ndk-r13b/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-gcc-4.9 --sysroot=$SYSROOT"`
+
+
+**Note:** You can unset the exported variable by running unset CC(or name of exported here)
 
   
   <dt>Programs needed on top of the NDK and SDK:</dt>
