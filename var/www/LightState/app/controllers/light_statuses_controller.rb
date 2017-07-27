@@ -33,12 +33,12 @@ class LightStatusesController < ActionController::Base
     if @state == "1"
       Rails.logger.debug "debugging - state = 1"
       LightStatus.all.each do |ls|
-        send_signal(ls.ip, "onn") if is_alive?(ls.ip)
+        send_signal("onn", ls.ip) if is_alive?(ls.ip)
       end
     else
       Rails.logger.debug "debugging - state = 0"
       LightStatus.all.each do |ls|
-        send_signal(ls.ip, "off") if is_alive?(ls.ip)
+        send_signal("off", ls.ip) if is_alive?(ls.ip)
       end
     end
 
