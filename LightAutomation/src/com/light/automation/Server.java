@@ -104,24 +104,24 @@ public class Server extends Service {
               in = new BufferedReader(new InputStreamReader(client.getInputStream()));
               serverMessage = in.readLine();
               if(serverMessage.equals("onn")) {
-                Log.i("serverService","onn");
+                Log.i("light_state","onn");
                 db.updateLightState(new LightState(1, 1, mIP));
                 sendSig("onn");
                 client.close();
               }
               else if(serverMessage.equals("off")) {
-                Log.i("serverService","off");
+                Log.i("light_state","off");
                 db.updateLightState(new LightState(1, 0, mIP));
                 sendSig("off");
                 client.close();
               }
-              Log.i("serverService","serverMessage => " + serverMessage);
+              Log.i("light_state","serverMessage => " + serverMessage);
             } 
             catch(UnknownHostException e) {
-              Log.e("serverService error","UnknownHostException => " + e.toString());
+              Log.e("light_state error","UnknownHostException => " + e.toString());
             } 
             catch(IOException e) {
-              Log.e("serverService error","IOException(1) => " + e.toString());
+              Log.e("light_state error","IOException(1) => " + e.toString());
             } 
             finally {
               db.close();
@@ -130,7 +130,7 @@ public class Server extends Service {
           }
         } 
         catch(IOException e) {
-          Log.e("serverService error","IOException(2) => " + e.toString());
+          Log.e("light_state error","IOException(2) => " + e.toString());
           e.printStackTrace();
         }
       }
@@ -140,7 +140,7 @@ public class Server extends Service {
   }
 
   public void sendSig(String sig) {
-    Log.d("serverService", "sig: " + sig);
+    Log.d("light_state", "sig: " + sig);
     intent = new Intent("toggle");
     intent.putExtra("button", sig);     
     sendBroadcast(intent);

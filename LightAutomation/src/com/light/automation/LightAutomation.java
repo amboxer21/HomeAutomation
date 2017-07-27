@@ -83,9 +83,11 @@ public class LightAutomation extends Activity {
     Toast.makeText(getApplicationContext(), getIPAddress(), Toast.LENGTH_LONG).show();    
 
     if(db.getLightStateCount() == 0) {
+			Log.d("light_state onCreate()", "db.getLightStateCount() == 0");
       db.addLightState(new LightState(1, 0, getIPAddress()));
     }
     if(db.getLightStateCount() > 0 && db.getLightStateHelper().equals("1")) {
+			Log.d("light_state onCreate()", "db.getLightStateCount() > 0 && db.getLightStateHelper().equals(1)");
       toggle.setChecked(true);
     }
     
@@ -108,24 +110,26 @@ public class LightAutomation extends Activity {
             /*client = new Client("192.168.1.177", 9486, "onn"); 
             client.sendDataWithString();*/
             //Toast.makeText(getApplicationContext(), "" + db.getLightStateHelper(), Toast.LENGTH_LONG).show();
+						Log.d("light_state", "db.getLightStateHelper().equals(0)");
             toggle.setChecked(true);
             sendPostRequest.post(true, getIPAddress(), getApplicationContext());
             mIP = Message.obtain(null, Server.MSG_STRING, getIPAddress());
             mService.send(mIP);
-            //db.updateLightState(new LightState(1, 1));
-            //db.close();
+            db.updateLightState(new LightState(1, 1, getIPAddress()));
+            db.close();
           } 
           else if(db.getLightStateHelper().equals("1")) {
             //Process process = Runtime.getRuntime().exec(new String[] { "su", "-c", "/data/local/client 192.168.1.177 9486 on"});
             /*client = new Client("192.168.1.177", 9486, "off"); 
             client.sendDataWithString();*/
             //Toast.makeText(getApplicationContext(), "" + db.getLightStateHelper(), Toast.LENGTH_LONG).show();
+						Log.d("light_state", "db.getLightStateHelper().equals(1)");
             toggle.setChecked(false);
             sendPostRequest.post(false, getIPAddress(), getApplicationContext());
             mIP = Message.obtain(null, Server.MSG_STRING, getIPAddress());
             mService.send(mIP);
-            //db.updateLightState(new LightState(1, 0));
-            //db.close();
+            db.updateLightState(new LightState(1, 0, getIPAddress()));
+            db.close();
           }
         }
 		    catch(Exception e) {
@@ -177,7 +181,7 @@ public class LightAutomation extends Activity {
     public void onReceive(Context context, Intent intent) {
 
       String data = intent.getStringExtra("button");
-      Log.d("serverService","data: " + data);
+      Log.d("light_state onRecieve()","data: " + data);
       if(data != null) {
         if(data.equals("onn")) {
           updateButton("onn");

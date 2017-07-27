@@ -23,6 +23,7 @@ public class SendPostRequest {
   public static void post(boolean state, String ip, Context context) {
     try {
       Map<String, String> choice = new HashMap<String, String>();
+			Log.d("light_state", "state: " + state);
       if(state) {
         choice.put("state", "1");
         choice.put("ip", ip);
