@@ -40,18 +40,18 @@ class LightStatusesController < ActionController::Base
   end    
 
   def onn_state(ip)
-    send_signal("onn", ip) if is_alive?(ip)
+    send_signal(ip, "onn") if is_alive?(ip)
   end
 
   def off_state(ip)
-    send_signal("off", ip) if is_alive?(ip)
+    send_signal(ip, "off") if is_alive?(ip)
   end
 
   def is_alive?(ip)
     return `ping -w1 -c1 #{ip}`.match(/, 0% packet loss/) ? true : false
   end
 
-  def send_signal(sig, ip)
+  def send_signal(ip, sig)
     `bin/client #{ip} 9486 "#{sig}"`
   end
 
