@@ -12,7 +12,7 @@ void setup() {
   Serial.begin(115200);
   pinMode(16, OUTPUT);
 
-  IPAddress ip(192, 168, 1, 176);
+  IPAddress ip(192, 168, 1, 177);
   IPAddress gateway(192, 168, 1, 1);
   IPAddress subnet(255, 255, 255, 0);
 
