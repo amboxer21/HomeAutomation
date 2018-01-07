@@ -33,7 +33,7 @@ public class SendPostRequest {
         choice.put("ip", ip);
       }
       String json = new GsonBuilder().create().toJson(choice, Map.class);
-      makeRequest("http://192.168.1.9:3000", json, context);
+      makeRequest("http://192.168.1.10:3000", json, context);
     }
     catch(Exception e) {
       e.printStackTrace();
