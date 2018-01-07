@@ -15,48 +15,48 @@ class LightStatusesController < ActionController::Base
     @ip    = params[:ip]
     @state = params[:state]
 
-    if !LightStatus.find_by(ip: @ip).nil? 
-      @light_status = LightStatus.find_by(ip: @ip)
+    def update_state
       LightStatus.all.each do |s| 
+	Rails.logger.debug "debugging - s.ip: #{s.ip}"
         s.update_columns(state: @state)
+	Rails.logger.debug "debugging - @state: #{@state}"
+        @state.to_s.match(/1/) ? onn_state(s.ip) : off_state(s.ip)
       end
-    #elsif LightStatus.find_by(ip: @ip).nil? && !@state.nil?
-    #  LightStatus.all.each do |s|
-    #    return unless s.ip.count > 0
-    #    `bin/client #{ls.ip} 8080 "#{@state}"`
-    #  end
-    else
-      LightStatus.create(state: @state, ip: @ip)
-      @light_status = LightStatus.find_by(ip: @ip)
     end
 
-    if @state == "1"
-      Rails.logger.debug "debugging - state = 1"
-      LightStatus.all.each do |ls|
-        send_signal("onn", ls.ip) if is_alive?(ls.ip)
-      end
-    else
-      Rails.logger.debug "debugging - state = 0"
-      LightStatus.all.each do |ls|
-        send_signal("off", ls.ip) if is_alive?(ls.ip)
-      end
+    def create_state_and_update
+      LightStatus.create(state: @state, ip: @ip)
+      update_state
     end
+
+    @light_status = LightStatus.find_by(ip: @ip)
+    @light_status.nil? ? create_state_and_update : update_state
 
     respond_to do |format|
-      if @light_status.save
+      if @light_status.save && !@light_status.nil?
         format.json { render nothing: true, status: :created }
       else
         format.json { render json: @light_status.errors, status: :unprocessable_entity }
       end
     end
+  end    
+
+  def send_signal(ip, sig)
+    `bin/client #{ip} 9486 "#{sig}"`
+  end
+
+  def onn_state(ip)
+    Rails.logger.debug "debugging - on_state(ip)"
+    send_signal(ip, "onn") if is_alive?(ip)
+  end
+
+  def off_state(ip)
+    Rails.logger.debug "debugging - off_state(ip)"
+    send_signal(ip, "off") if is_alive?(ip)
   end
 
   def is_alive?(ip)
     return `ping -w1 -c1 #{ip}`.match(/, 0% packet loss/) ? true : false
-  end
-
-  def send_signal(sig, ip)
-    `bin/client #{ip} 9486 "#{sig}"`
   end
 
   private
