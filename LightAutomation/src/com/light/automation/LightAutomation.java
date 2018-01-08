@@ -34,6 +34,7 @@ public class LightAutomation extends Activity {
   private static ToggleButton toggle;
 
   private static String ip;
+  public  static Client client;
 
   private boolean mBound;
   private boolean lightsOn = false;
@@ -42,9 +43,7 @@ public class LightAutomation extends Activity {
   private static Message mIP;
   public  static final int MSG_STRING = 0;
 
-  public  static Client client; 
   public  static DatabaseHandler db;
-  private static SendPostRequest sendPostRequest;
 
   @Override
   public void onBackPressed() {
@@ -68,15 +67,6 @@ public class LightAutomation extends Activity {
   	super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-    bindService(new Intent(this, Server.class), mConnection,
-      Context.BIND_AUTO_CREATE);
-
-    LightReceiver lightReceiver = new LightReceiver();
-    registerReceiver(lightReceiver, new IntentFilter("toggle"));
-
-    Intent serviceIntent = new Intent(this, Server.class);
-    startService(serviceIntent);
-
     toggle = (ToggleButton)findViewById(R.id.toggle);
     db     = new DatabaseHandler(this);
 
@@ -91,15 +81,6 @@ public class LightAutomation extends Activity {
       toggle.setChecked(true);
     }
     
-    try {
-      mIP = Message.obtain(null, Server.MSG_STRING, getIPAddress());
-      mService.send(mIP);
-    }
-    catch(Exception e) {
-      Log.e("light_state", "Exception(1) => " + e.toString());
-      e.printStackTrace();
-    }
-
     toggle.setOnClickListener(new OnClickListener() {
 
       @Override
@@ -107,27 +88,21 @@ public class LightAutomation extends Activity {
 		    try {
           if(db.getLightStateHelper().equals("0")) {
             //Process process = Runtime.getRuntime().exec(new String[] { "su", "-c", "/data/local/client 192.168.1.177 9486 off"});
-            /*client = new Client("192.168.1.177", 9486, "onn"); 
-            client.sendDataWithString();*/
+            client = new Client("192.168.1.177", 9486, "onn"); 
+            client.sendDataWithString();
             //Toast.makeText(getApplicationContext(), "" + db.getLightStateHelper(), Toast.LENGTH_LONG).show();
 						Log.d("light_state", "db.getLightStateHelper().equals(0)");
             toggle.setChecked(true);
-            sendPostRequest.post(true, getIPAddress(), getApplicationContext());
-            mIP = Message.obtain(null, Server.MSG_STRING, getIPAddress());
-            mService.send(mIP);
             db.updateLightState(new LightState(1, 1, getIPAddress()));
             db.close();
           } 
           else if(db.getLightStateHelper().equals("1")) {
             //Process process = Runtime.getRuntime().exec(new String[] { "su", "-c", "/data/local/client 192.168.1.177 9486 on"});
-            /*client = new Client("192.168.1.177", 9486, "off"); 
-            client.sendDataWithString();*/
+            client = new Client("192.168.1.177", 9486, "off"); 
+            client.sendDataWithString();
             //Toast.makeText(getApplicationContext(), "" + db.getLightStateHelper(), Toast.LENGTH_LONG).show();
 						Log.d("light_state", "db.getLightStateHelper().equals(1)");
             toggle.setChecked(false);
-            sendPostRequest.post(false, getIPAddress(), getApplicationContext());
-            mIP = Message.obtain(null, Server.MSG_STRING, getIPAddress());
-            mService.send(mIP);
             db.updateLightState(new LightState(1, 0, getIPAddress()));
             db.close();
           }
@@ -141,21 +116,6 @@ public class LightAutomation extends Activity {
     });
 
   }
-
-  private ServiceConnection mConnection = new ServiceConnection() {
-
-    @Override
-    public void onServiceDisconnected(ComponentName name) {
-      mService = null;
-      mBound   = false;
-    }
-
-    @Override
-    public void onServiceConnected(ComponentName name, IBinder service) {
-      mService = new Messenger(service);
-      mBound   = true;
-    }
-  };
 
   public String getIPAddress() {
     WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
@@ -175,22 +135,4 @@ public class LightAutomation extends Activity {
     }
   }
 
-  private class LightReceiver extends BroadcastReceiver {
- 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-
-      String data = intent.getStringExtra("button");
-      Log.d("light_state onRecieve()","data: " + data);
-      if(data != null) {
-        if(data.equals("onn")) {
-          updateButton("onn");
-        }
-        else if(data.equals("off")) {
-          updateButton("off");
-        }
-      }
-    }
-  }
-  
 }
