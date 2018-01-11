@@ -19,33 +19,33 @@
 
 > **VoiceControl/**	
 
-`FILL`
+`This is written in the Python programming language using the Pocketsphinx API. It is ran on a laptop or anything x86/x86_64 based. I want to get it running on ARM in the future.`
 
 > **etc/init.d/**
 
-`FILL`
+`This starts the rails server at boot time.`
 
 > **var/www/LightState/**
 
-`FILL`
+`This is the Rails app that is housed on the Raspberry PI3. This handles the incoming signals and redistributes them to everyone connected on the LAN who have the app installed.`
 
 ---
 
 > **NOTES.txt**
 
-`FILL`
+`Read it to see its contents.`
 
 > **README.md**
 
-`FILL`
+`Youre reading it ;)`
 
 > **crontab.txt**
 
-`FILL`
+`This executes a script every minute that checks to see if the rails server is running or not. If it is not running this script launches the Rails server.`
 
 > **light_statuses_production.mysql**
 
-`FILL`
+`The rails DB on the RPI3 that stores the IPs.`
 
 <br></br>
 ## [Cross compile C client on ARMv7]
