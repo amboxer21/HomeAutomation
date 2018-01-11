@@ -29,8 +29,6 @@
 
 `This is the Rails app that is housed on the Raspberry PI3. This handles the incoming signals and redistributes them to everyone connected on the LAN who have the app installed.`
 
----
-
 > **NOTES.txt**
 
 `Read it to see its contents.`
