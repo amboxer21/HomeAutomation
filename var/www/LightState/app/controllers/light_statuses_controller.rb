@@ -9,25 +9,25 @@ class LightStatusesController < ActionController::Base
   def new
     @light_status = LightStatus.all
   end
+	
+  def update_state
+    LightStatus.all.each do |s| 
+      Rails.logger.debug "debugging - s.ip: #{s.ip}"
+      s.update_columns(state: @state)
+      Rails.logger.debug "debugging - @state: #{@state}"
+      @state.to_s.match(/1/) ? onn_state(s.ip) : off_state(s.ip)
+    end
+  end
+
+  def create_state_and_update
+    LightStatus.create(state: @state, ip: @ip)
+    update_state
+  end
 
   def create
 
     @ip    = params[:ip]
     @state = params[:state]
-
-    def update_state
-      LightStatus.all.each do |s| 
-	Rails.logger.debug "debugging - s.ip: #{s.ip}"
-        s.update_columns(state: @state)
-	Rails.logger.debug "debugging - @state: #{@state}"
-        @state.to_s.match(/1/) ? onn_state(s.ip) : off_state(s.ip)
-      end
-    end
-
-    def create_state_and_update
-      LightStatus.create(state: @state, ip: @ip)
-      update_state
-    end
 
     @light_status = LightStatus.find_by(ip: @ip)
     @light_status.nil? ? create_state_and_update : update_state
